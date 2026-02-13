@@ -43,26 +43,22 @@
                 </div>
 
                 <div class="letter-body">
-            <p>My Love,</p>
+            <p>Dear Mj,</p>
 
             <p>
-              I wanted to take a moment today to sit down and actually put into words what you mean to me. Sometimes life moves so fast that I forget to stop and tell you that you are the best thing that has ever happened to me.
+              First of all, Happy Valentine’s Day! It’s weird na dalawang Valentine’s day na ang nagdaan sa relationship natin pero eto ang first time natin mag‑cecelebrate. Pakagat pa more sa lamok HAHAHA!
             </p>
 
             <p>
-              I still remember [mention a small detail from when you first met, e.g., the first time we talked / what you were wearing / how nervous I was]. Back then, I knew you were special, but I had no idea how much you would come to define my world. You aren't just my girlfriend; you're the person I want to tell every bit of news to, the first person I want to see when I wake up, and the peace I look forward to at the end of a long day.
+              Well anyway, we’re almost 2 years together and I can definitely say that these are the happiest days of my life. There were ups and downs, laughter, fights, but we were able to manage through it all.
             </p>
 
             <p>
-              I love the way you [mention a specific quirk, e.g., scrunch your nose when you laugh / handle things with such grace / always know how to make me feel better]. It's the little things—the way we can sit in silence and it's never awkward, or the way we have a whole language of inside jokes that nobody else understands. You make me want to be a better version of myself, not because you ask me to, but because you deserve the absolute best.
+              No need na sa mga long cheesy messages—basta ipapakita at ipaparamdam ko na lang sayo the best that I can.
             </p>
 
             <p>
-              Thank you for choosing me every day. Thank you for your patience, your kindness, and your heart. I don't know exactly what the future holds, but as long as you're in it, I know it's going to be incredible.
-            </p>
-
-            <p>
-              Happy Valentine's Day, beautiful. I love you more than I can put into this letter.
+              Happy Valentine’s Day, my love. To more adventures, gala, kain, and shopping to us!
             </p>
 
                 <p class="letter-signoff">
