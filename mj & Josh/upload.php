@@ -6,9 +6,12 @@
 
 header('Content-Type: application/json');
 
-$baseDir = __DIR__;
-$uploadDir = $baseDir . '/uploads';
-$dataFile = $baseDir . '/gallery_data.json';
+// Use a writable storage path:
+// - On Railway: set env STORAGE_PATH=/data (a mounted volume)
+// - Locally: falls back to this folder
+$storageBase = getenv('STORAGE_PATH') ?: __DIR__;
+$uploadDir   = $storageBase . '/uploads';
+$dataFile    = $storageBase . '/gallery_data.json';
 
 // Allowed: images only, no size limit
 $imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];

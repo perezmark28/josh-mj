@@ -886,6 +886,50 @@ main {
   text-align: center;
 }
 
+/* Fixed 6‑photo frame on Gallery page */
+.fixed-gallery-frame {
+  max-width: 360px;
+  margin: 2rem auto 0;
+  padding: 1rem 0.75rem;
+  border-radius: 18px;
+  background: #f2e2d2;
+  background-image:
+    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px),
+    linear-gradient(180deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+  background-size: 6px 6px;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 0.75rem;
+}
+
+.frame-slot {
+  position: relative;
+  background: #5b0711;
+  border-radius: 10px;
+  padding: 0.4rem;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.frame-slot::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: none;
+}
+
+.frame-slot img {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
 .gallery-item-delete {
   position: absolute;
   top: 0.5rem;

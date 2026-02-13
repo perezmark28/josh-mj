@@ -24,20 +24,15 @@
   <main>
     <section class="section">
       <h2>Gallery <span class="heart-icon">♥</span></h2>
-      <p class="section-text">Photos of us—our smiles, our adventures, our love. Upload from your phone or browser and they’ll stay here.</p>
+      <p class="section-text">Six favorite moments of us, framed together forever.</p>
       
-      <div id="galleryGrid" class="gallery-grid">
-        <!-- Loaded by gallery.js from server -->
-      </div>
-
-      <div class="gallery-upload-container">
-        <form id="galleryForm" class="gallery-form" action="upload.php" method="post" enctype="multipart/form-data">
-          <label for="photoUpload" class="upload-btn-label">
-            <input type="file" id="photoUpload" name="media[]" accept="image/*" multiple>
-            <span class="upload-btn-text">Add photos</span>
-          </label>
-         
-        </form>
+      <div class="fixed-gallery-frame">
+        <div class="frame-slot"><img src="photos/photo1.jpg" alt="Photo 1"></div>
+        <div class="frame-slot"><img src="photos/photo2.jpg" alt="Photo 2"></div>
+        <div class="frame-slot"><img src="photos/photo3.jpg" alt="Photo 3"></div>
+        <div class="frame-slot"><img src="photos/photo4.jpg" alt="Photo 4"></div>
+        <div class="frame-slot"><img src="photos/photo5.jpg" alt="Photo 5"></div>
+        <div class="frame-slot"><img src="photos/photo6.jpg" alt="Photo 6"></div>
       </div>
     </section>
   </main>
@@ -47,6 +42,5 @@
   </footer>
 
   <script src="script.js"></script>
-  <script src="gallery.js"></script>
 </body>
 </html>
