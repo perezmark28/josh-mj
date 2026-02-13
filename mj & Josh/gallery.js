@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error && !data.uploaded) alert(data.error);
           photoUpload.value = '';
         })
-        .catch(function() { alert('Upload failed. Check file size (max 50MB) or try again.'); })
+        .catch(function() { alert('Upload failed. Please try again.'); })
         .finally(function() {
           if (btn.textContent.indexOf('uploaded') === -1) btn.textContent = origText;
           btn.disabled = false;

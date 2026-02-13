@@ -10,9 +10,8 @@ $baseDir = __DIR__;
 $uploadDir = $baseDir . '/uploads';
 $dataFile = $baseDir . '/gallery_data.json';
 
-// Allowed: images only, max 50 MB each
+// Allowed: images only, no size limit
 $imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-$maxImageBytes = 50 * 1024 * 1024;   // 50 MB
 
 if (!is_dir($uploadDir)) {
   mkdir($uploadDir, 0755, true);
@@ -78,11 +77,6 @@ foreach ($list as $file) {
 
   if (!$isImage) {
     $errors[] = $file['name'] . ': only images are allowed (JPEG, PNG, GIF, WebP)';
-    continue;
-  }
-
-  if ($file['size'] > $maxImageBytes) {
-    $errors[] = $file['name'] . ': file too large (max 50MB)';
     continue;
   }
 
