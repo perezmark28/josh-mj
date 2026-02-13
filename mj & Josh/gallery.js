@@ -1,4 +1,4 @@
-// Gallery: load from PHP backend, upload via upload.php, support images + short videos
+// Gallery: load from PHP backend, upload via upload.php, photos only
 document.addEventListener('DOMContentLoaded', function() {
   const galleryForm = document.getElementById('galleryForm');
   const photoUpload = document.getElementById('photoUpload');
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         galleryGrid.innerHTML = '';
 
         if (items.length === 0) {
-          galleryGrid.innerHTML = '<p class="section-text gallery-empty">No photos or videos yet. Add some above—they’ll be saved on the server.</p>';
+          galleryGrid.innerHTML = '<p class="section-text gallery-empty">No photos yet. Add some above—they’ll be saved on the server.</p>';
           return;
         }
 
@@ -22,21 +22,11 @@ document.addEventListener('DOMContentLoaded', function() {
           const div = document.createElement('div');
           div.className = 'gallery-item';
 
-          if (item.type === 'video') {
-            const video = document.createElement('video');
-            video.src = item.url;
-            video.controls = true;
-            video.playsInline = true;
-            video.preload = 'metadata';
-            video.setAttribute('aria-label', 'Video clip');
-            div.appendChild(video);
-          } else {
-            const img = document.createElement('img');
-            img.src = item.url;
-            img.alt = item.originalName || 'Photo';
-            img.loading = 'lazy';
-            div.appendChild(img);
-          }
+          const img = document.createElement('img');
+          img.src = item.url;
+          img.alt = item.originalName || 'Photo';
+          img.loading = 'lazy';
+          div.appendChild(img);
 
           const deleteBtn = document.createElement('button');
           deleteBtn.className = 'gallery-item-delete';
@@ -71,7 +61,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       var files = photoUpload.files;
       if (!files || files.length === 0) {
-        alert('Choose one or more photos or short videos first.');
+        alert('Choose one or more photos first.');
         return;
       }
 
@@ -95,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (data.error && !data.uploaded) alert(data.error);
           photoUpload.value = '';
         })
-        .catch(function() { alert('Upload failed. Try again or use a smaller file.'); })
+        .catch(function() { alert('Upload failed. Check file size (max 50MB) or try again.'); })
         .finally(function() {
           btn.textContent = origText;
           btn.disabled = false;

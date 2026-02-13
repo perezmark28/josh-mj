@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle gallery uploads: images and short video clips.
+ * Handle gallery uploads: images only.
  * Persists files to uploads/ and metadata to gallery_data.json.
  */
 
@@ -10,11 +10,9 @@ $baseDir = __DIR__;
 $uploadDir = $baseDir . '/uploads';
 $dataFile = $baseDir . '/gallery_data.json';
 
-// Allowed types
+// Allowed: images only, max 50 MB each
 $imageTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-$videoTypes = ['video/mp4', 'video/quicktime', 'video/webm'];
-$maxImageBytes = 10 * 1024 * 1024;   // 10 MB
-$maxVideoBytes = 50 * 1024 * 1024;   // 50 MB for short clips
+$maxImageBytes = 50 * 1024 * 1024;   // 50 MB
 
 if (!is_dir($uploadDir)) {
   mkdir($uploadDir, 0755, true);
@@ -77,22 +75,19 @@ foreach ($list as $file) {
   }
 
   $isImage = in_array($file['type'], $imageTypes, true);
-  $isVideo = in_array($file['type'], $videoTypes, true);
 
-  if (!$isImage && !$isVideo) {
-    $errors[] = $file['name'] . ': only images and short videos (MP4, WebM, MOV) are allowed';
+  if (!$isImage) {
+    $errors[] = $file['name'] . ': only images are allowed (JPEG, PNG, GIF, WebP)';
     continue;
   }
 
-  $maxBytes = $isImage ? $maxImageBytes : $maxVideoBytes;
-  if ($file['size'] > $maxBytes) {
-    $limit = $isImage ? '10MB' : '50MB';
-    $errors[] = $file['name'] . ': file too large (max ' . $limit . ')';
+  if ($file['size'] > $maxImageBytes) {
+    $errors[] = $file['name'] . ': file too large (max 50MB)';
     continue;
   }
 
-  $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)) ?: ($isImage ? 'jpg' : 'mp4');
-  $safe = preg_replace('/[^a-zA-Z0-9_-]/', '', $ext) ?: 'bin';
+  $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION)) ?: 'jpg';
+  $safe = preg_replace('/[^a-zA-Z0-9_-]/', '', $ext) ?: 'jpg';
   $filename = date('Ymd-His') . '-' . substr(bin2hex(random_bytes(4)), 0, 8) . '.' . $safe;
   $path = $uploadDir . '/' . $filename;
 
@@ -102,12 +97,11 @@ foreach ($list as $file) {
   }
 
   $id = uniqid('', true);
-  $type = $isImage ? 'image' : 'video';
   $url = 'uploads/' . $filename;
 
   $items[] = [
     'id' => $id,
-    'type' => $type,
+    'type' => 'image',
     'url' => $url,
     'originalName' => $file['name'],
     'createdAt' => date('c'),

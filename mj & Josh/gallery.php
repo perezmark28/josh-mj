@@ -24,7 +24,7 @@
   <main>
     <section class="section">
       <h2>Gallery <span class="heart-icon">♥</span></h2>
-      <p class="section-text">Photos and short clips of us—our smiles, our adventures, our love. Upload from your phone or browser and they’ll stay here.</p>
+      <p class="section-text">Photos of us—our smiles, our adventures, our love. Upload from your phone or browser and they’ll stay here.</p>
       
       <div id="galleryGrid" class="gallery-grid">
         <!-- Loaded by gallery.js from server -->
@@ -34,10 +34,10 @@
         <form id="galleryForm" class="gallery-form" action="upload.php" method="post" enctype="multipart/form-data">
           <input type="hidden" name="MAX_FILE_SIZE" value="52428800">
           <label for="photoUpload" class="upload-btn-label">
-            <input type="file" id="photoUpload" name="media[]" accept="image/*,video/mp4,video/quicktime,video/webm" multiple capture="environment">
-            <span class="upload-btn-text">Add photos or short videos</span>
+            <input type="file" id="photoUpload" name="media[]" accept="image/*" multiple capture="environment">
+            <span class="upload-btn-text">Add photos</span>
           </label>
-          <p class="upload-hint">Images (max 10MB), short videos – MP4, WebM, MOV (max 50MB). Works on phone and desktop.</p>
+          <p class="upload-hint">Photos only – JPEG, PNG, GIF, WebP (max 50MB each). Works on phone and desktop.</p>
         </form>
       </div>
     </section>
