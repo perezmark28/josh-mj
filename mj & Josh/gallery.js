@@ -84,6 +84,11 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
       }
 
+      if (files.length > 12) {
+        alert('You can upload up to 12 photos at a time.');
+        return;
+      }
+
       var formData = new FormData();
       for (var i = 0; i < files.length; i++) formData.append('media[]', files[i]);
 

@@ -67,6 +67,13 @@ $items = readGalleryData($dataFile);
 $uploaded = [];
 $errors = [];
 
+// Limit to 12 files per upload
+$maxFiles = 12;
+if (count($list) > $maxFiles) {
+  $errors[] = 'You can upload up to ' . $maxFiles . ' photos at a time. Extra files were ignored.';
+  $list = array_slice($list, 0, $maxFiles);
+}
+
 foreach ($list as $file) {
   if ($file['error'] !== UPLOAD_ERR_OK) {
     $errors[] = $file['name'] . ': upload error ' . $file['error'];
