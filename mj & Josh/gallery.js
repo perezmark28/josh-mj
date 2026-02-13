@@ -1,88 +1,111 @@
-// Gallery photo management functionality
+// Gallery: load from PHP backend, upload via upload.php, support images + short videos
 document.addEventListener('DOMContentLoaded', function() {
+  const galleryForm = document.getElementById('galleryForm');
   const photoUpload = document.getElementById('photoUpload');
   const galleryGrid = document.getElementById('galleryGrid');
+  const apiList = 'api/gallery.php';
 
-  // Load and display saved photos
-  function loadPhotos() {
-    const savedPhotos = JSON.parse(localStorage.getItem('galleryPhotos') || '[]');
-    galleryGrid.innerHTML = '';
+  function loadGallery() {
+    galleryGrid.innerHTML = '<p class="section-text gallery-loading">Loading…</p>';
+    fetch(apiList, { cache: 'no-store' })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        const items = data.items || [];
+        galleryGrid.innerHTML = '';
 
-    if (savedPhotos.length === 0) {
-      galleryGrid.innerHTML = '<p class="section-text" style="text-align: center; opacity: 0.6; grid-column: 1 / -1;">No photos uploaded yet. Upload your first photo above!</p>';
-      return;
-    }
+        if (items.length === 0) {
+          galleryGrid.innerHTML = '<p class="section-text gallery-empty">No photos or videos yet. Add some above—they’ll be saved on the server.</p>';
+          return;
+        }
 
-    savedPhotos.forEach((photo, index) => {
-      const galleryItem = document.createElement('div');
-      galleryItem.className = 'gallery-item';
-      
-      const img = document.createElement('img');
-      img.src = photo.data;
-      img.alt = `Photo ${index + 1}`;
-      
-      const deleteBtn = document.createElement('button');
-      deleteBtn.className = 'gallery-item-delete';
-      deleteBtn.innerHTML = '×';
-      deleteBtn.setAttribute('aria-label', 'Delete photo');
-      deleteBtn.onclick = (e) => {
-        e.stopPropagation();
-        deletePhoto(index);
-      };
-      
-      galleryItem.appendChild(img);
-      galleryItem.appendChild(deleteBtn);
-      
-      galleryGrid.appendChild(galleryItem);
-    });
+        items.forEach(function(item) {
+          const div = document.createElement('div');
+          div.className = 'gallery-item';
+
+          if (item.type === 'video') {
+            const video = document.createElement('video');
+            video.src = item.url;
+            video.controls = true;
+            video.playsInline = true;
+            video.preload = 'metadata';
+            video.setAttribute('aria-label', 'Video clip');
+            div.appendChild(video);
+          } else {
+            const img = document.createElement('img');
+            img.src = item.url;
+            img.alt = item.originalName || 'Photo';
+            img.loading = 'lazy';
+            div.appendChild(img);
+          }
+
+          const deleteBtn = document.createElement('button');
+          deleteBtn.className = 'gallery-item-delete';
+          deleteBtn.innerHTML = '×';
+          deleteBtn.setAttribute('aria-label', 'Delete');
+          deleteBtn.onclick = function(e) {
+            e.stopPropagation();
+            deleteItem(item.id);
+          };
+          div.appendChild(deleteBtn);
+          galleryGrid.appendChild(div);
+        });
+      })
+      .catch(function() {
+        galleryGrid.innerHTML = '<p class="section-text gallery-error">Could not load gallery. Check that you’re using the PHP site.</p>';
+      });
   }
 
-  // Handle photo upload
-  photoUpload.addEventListener('change', function(e) {
-    const files = Array.from(e.target.files);
-    
-    if (files.length === 0) return;
+  function deleteItem(id) {
+    if (!confirm('Remove this from the gallery?')) return;
+    fetch(apiList + '?delete=' + encodeURIComponent(id))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.ok) loadGallery();
+        else alert(data.error || 'Delete failed');
+      })
+      .catch(function() { alert('Delete failed'); });
+  }
 
-    files.forEach(file => {
-      if (!file.type.startsWith('image/')) {
-        alert('Please upload only image files!');
+  if (galleryForm && photoUpload) {
+    galleryForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var files = photoUpload.files;
+      if (!files || files.length === 0) {
+        alert('Choose one or more photos or short videos first.');
         return;
       }
 
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const photo = {
-          data: e.target.result,
-          date: new Date().toISOString()
-        };
-        
-        savePhoto(photo);
-      };
-      reader.readAsDataURL(file);
+      var formData = new FormData();
+      for (var i = 0; i < files.length; i++) formData.append('media[]', files[i]);
+
+      var btn = galleryForm.querySelector('.upload-btn-text');
+      var origText = btn.textContent;
+      btn.textContent = 'Uploading…';
+      btn.disabled = true;
+
+      fetch('upload.php', {
+        method: 'POST',
+        body: formData,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (data.ok && data.uploaded && data.uploaded.length) loadGallery();
+          if (data.errors && data.errors.length) alert('Some files were skipped:\n' + data.errors.join('\n'));
+          if (data.error && !data.uploaded) alert(data.error);
+          photoUpload.value = '';
+        })
+        .catch(function() { alert('Upload failed. Try again or use a smaller file.'); })
+        .finally(function() {
+          btn.textContent = origText;
+          btn.disabled = false;
+        });
     });
 
-    // Reset input
-    e.target.value = '';
-  });
-
-  function savePhoto(photo) {
-    const savedPhotos = JSON.parse(localStorage.getItem('galleryPhotos') || '[]');
-    savedPhotos.push(photo);
-    localStorage.setItem('galleryPhotos', JSON.stringify(savedPhotos));
-    
-    // Reload gallery
-    loadPhotos();
+    photoUpload.addEventListener('change', function() {
+      if (photoUpload.files.length > 0) galleryForm.dispatchEvent(new Event('submit'));
+    });
   }
 
-  function deletePhoto(index) {
-    if (confirm('Are you sure you want to delete this photo?')) {
-      const savedPhotos = JSON.parse(localStorage.getItem('galleryPhotos') || '[]');
-      savedPhotos.splice(index, 1);
-      localStorage.setItem('galleryPhotos', JSON.stringify(savedPhotos));
-      loadPhotos();
-    }
-  }
-
-  // Load photos on page load
-  loadPhotos();
+  loadGallery();
 });

@@ -73,7 +73,7 @@ if (valentineYesButtons.length && valentineYayModal) {
 if (valentineYayContinueBtn && valentineYayModal) {
   valentineYayContinueBtn.addEventListener('click', function () {
     closeModal(valentineYayModal);
-    window.location.href = 'home.html';
+    window.location.href = 'home.php';
   });
 }
 
@@ -149,7 +149,7 @@ if (pinKeypad && pinDots.length === 6) {
     if (currentPin.length === 6) {
       if (currentPin === CORRECT_PIN) {
         if (pinError) pinError.textContent = '';
-        window.location.href = 'home.html';
+        window.location.href = 'home.php';
       } else {
         resetPin('Wrong PIN. Try again.');
       }
