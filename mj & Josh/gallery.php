@@ -34,10 +34,9 @@
         <form id="galleryForm" class="gallery-form" action="upload.php" method="post" enctype="multipart/form-data">
           <input type="hidden" name="MAX_FILE_SIZE" value="52428800">
           <label for="photoUpload" class="upload-btn-label">
-            <input type="file" id="photoUpload" name="media[]" accept="image/*" multiple capture="environment">
+            <input type="file" id="photoUpload" name="media[]" accept="image/*" multiple>
             <span class="upload-btn-text">Add photos</span>
           </label>
-          <p class="upload-hint">Select up to 4 (or more) photos at once to upload in one go. JPEG, PNG, GIF, WebP – max 50MB each.</p>
         </form>
       </div>
     </section>
