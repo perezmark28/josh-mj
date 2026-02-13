@@ -751,7 +751,7 @@ main {
 
 .memory-card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--text);
   margin: 0;
 }
@@ -772,8 +772,8 @@ main {
   background: rgba(233, 30, 140, 0.2);
   border: 1px solid rgba(233, 30, 140, 0.4);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -890,30 +890,36 @@ main {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 300;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, opacity 0.2s;
   opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.gallery-item:hover .gallery-item-delete {
+.gallery-item.show-delete .gallery-item-delete {
   opacity: 1;
+  pointer-events: auto;
+  background: rgba(233, 30, 140, 0.9);
 }
 
-.gallery-item-delete:hover {
-  background: rgba(233, 30, 140, 0.8);
-  transform: scale(1.1);
+.gallery-item-delete:hover,
+.gallery-item-delete:active {
+  background: rgba(233, 30, 140, 0.95);
+  transform: scale(1.15);
 }
 
 /* Reasons list */
@@ -1625,7 +1631,7 @@ main {
 
 .memory-card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: var(--text);
   margin: 0;
 }
@@ -1646,8 +1652,8 @@ main {
   background: rgba(233, 30, 140, 0.2);
   border: 1px solid rgba(233, 30, 140, 0.4);
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1737,11 +1743,16 @@ main {
   }
   
   .gallery-item-delete {
-    width: 24px;
-    height: 24px;
-    font-size: 1rem;
-    top: 0.25rem;
-    right: 0.25rem;
+    width: 36px;
+    height: 36px;
+    font-size: 1.4rem;
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+  
+  .gallery-item.show-delete .gallery-item-delete {
+    opacity: 1;
+    background: rgba(233, 30, 140, 0.9);
   }
   
   .upload-btn-text {
@@ -1815,30 +1826,36 @@ main {
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   border: none;
   border-radius: 50%;
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--text);
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   font-weight: 300;
   line-height: 1;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  transition: background 0.2s, transform 0.2s, opacity 0.2s;
   opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.gallery-item:hover .gallery-item-delete {
+.gallery-item.show-delete .gallery-item-delete {
   opacity: 1;
+  pointer-events: auto;
+  background: rgba(233, 30, 140, 0.9);
 }
 
-.gallery-item-delete:hover {
-  background: rgba(233, 30, 140, 0.8);
-  transform: scale(1.1);
+.gallery-item-delete:hover,
+.gallery-item-delete:active {
+  background: rgba(233, 30, 140, 0.95);
+  transform: scale(1.15);
 }
 
 .reasons-list {

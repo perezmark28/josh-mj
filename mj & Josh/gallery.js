@@ -37,6 +37,25 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteItem(item.id);
           };
           div.appendChild(deleteBtn);
+          
+          // Click on image to show delete button
+          div.addEventListener('click', function(e) {
+            // If clicking the delete button, don't toggle
+            if (e.target === deleteBtn || deleteBtn.contains(e.target)) {
+              return;
+            }
+            // Toggle show-delete class
+            const isShowing = div.classList.contains('show-delete');
+            // Hide all other items first
+            document.querySelectorAll('.gallery-item').forEach(function(otherItem) {
+              otherItem.classList.remove('show-delete');
+            });
+            // Toggle this item
+            if (!isShowing) {
+              div.classList.add('show-delete');
+            }
+          });
+          
           galleryGrid.appendChild(div);
         });
       })
