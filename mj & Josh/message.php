@@ -24,16 +24,25 @@
   <main>
     <section class="section">
       <h2>Message <span class="heart-icon">♥</span></h2>
-      <p class="section-text">A handwritten letter, just for you.</p>
+      <p class="section-text">Tap the envelope to open your letter.</p>
 
-      <div class="letter-card">
-        <div class="letter-card-inner">
-          <div class="letter-header">
-            <span class="letter-tag">Love Letter</span>
-            <span class="letter-heart">♥</span>
+      <div class="envelope-container" id="envelopeContainer">
+        <div class="envelope" id="envelope">
+          <div class="envelope-back"></div>
+          <div class="envelope-body"></div>
+          <div class="envelope-flap" id="envelopeFlap">
+            <div class="envelope-text">Happy Valentine's Day</div>
+            <div class="envelope-heart">♥</div>
           </div>
+          <div class="envelope-letter" id="envelopeLetter">
+            <div class="letter-card">
+              <div class="letter-card-inner">
+                <div class="letter-header">
+                  <span class="letter-tag">Love Letter</span>
+                  <span class="letter-heart">♥</span>
+                </div>
 
-          <div class="letter-body">
+                <div class="letter-body">
             <p>My Love,</p>
 
             <p>
@@ -56,10 +65,12 @@
               Happy Valentine's Day, beautiful. I love you more than I can put into this letter.
             </p>
 
-            <p class="letter-signoff">
-              Forever yours,<br>
-              <span class="letter-signature">Josh</span>
-            </p>
+                <p class="letter-signoff">
+                  Forever yours,<br>
+                  <span class="letter-signature">Josh</span>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>

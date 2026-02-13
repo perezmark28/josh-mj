@@ -156,3 +156,32 @@ if (pinKeypad && pinDots.length === 6) {
     }
   });
 }
+
+// Envelope animation on message page
+const envelope = document.getElementById('envelope');
+const envelopeContainer = document.getElementById('envelopeContainer');
+
+if (envelope && envelopeContainer) {
+  envelope.addEventListener('click', function() {
+    if (!envelope.classList.contains('opened')) {
+      envelope.classList.add('opened');
+      // Update the text after opening
+      const sectionText = document.querySelector('.section-text');
+      if (sectionText) {
+        sectionText.textContent = 'A handwritten letter, just for you.';
+      }
+    }
+  });
+
+  // Also support touch events for mobile
+  envelope.addEventListener('touchend', function(e) {
+    e.preventDefault();
+    if (!envelope.classList.contains('opened')) {
+      envelope.classList.add('opened');
+      const sectionText = document.querySelector('.section-text');
+      if (sectionText) {
+        sectionText.textContent = 'A handwritten letter, just for you.';
+      }
+    }
+  });
+}

@@ -350,11 +350,158 @@ main {
   font-size: 0.9rem;
 }
 
-/* Message letter card */
-.letter-card {
-  margin-top: 1.75rem;
+/* Envelope Animation */
+.envelope-container {
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
+  perspective: 1000px;
+}
+
+.envelope {
+  position: relative;
+  width: 320px;
+  height: 220px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.envelope:hover {
+  transform: scale(1.05);
+}
+
+.envelope-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #c41e3a;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+  border-radius: 8px 8px 4px 4px;
+  box-shadow: 0 8px 20px rgba(196, 30, 58, 0.5);
+}
+
+.envelope.opened .envelope-back {
+  position: relative;
+  height: auto;
+  min-height: auto;
+  padding: 1.5rem;
+  box-sizing: border-box;
+}
+
+.envelope-body {
+  position: absolute;
+  width: 100%;
+  height: 70%;
+  bottom: 0;
+  background: #c41e3a;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+  border-radius: 0 0 4px 4px;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.envelope.opened .envelope-body {
+  position: relative;
+  height: auto;
+  min-height: auto;
+  border-radius: 8px;
+  padding: 0;
+}
+
+.envelope-flap {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 0;
+  background: #c41e3a;
+  background-image: 
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+  border-radius: 8px 8px 0 0;
+  transform-origin: top;
+  transform: rotateX(0deg);
+  transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.2);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 1.5rem;
+}
+
+.envelope-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #ffffff;
+  text-align: center;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  font-style: italic;
+}
+
+.envelope-heart {
+  font-size: 1.6rem;
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+  opacity: 0.95;
+}
+
+.envelope-flap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.envelope.opened .envelope-flap {
+  transform: rotateX(-180deg);
+}
+
+.envelope-letter {
+  position: absolute;
+  width: 90%;
+  height: 85%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  transition: opacity 0.6s ease 0.3s, transform 0.6s ease 0.3s;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.envelope.opened .envelope-letter {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+
+.envelope.opened {
+  cursor: default;
+}
+
+.envelope.opened:hover {
+  transform: scale(1);
+}
+
+/* Message letter card */
+.letter-card {
+  margin-top: 0;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .letter-card-inner {
@@ -370,6 +517,64 @@ main {
   backdrop-filter: blur(18px);
   position: relative;
   overflow: hidden;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+/* When opened, make the whole letter sit on the red envelope background */
+.envelope.opened .letter-card-inner {
+  background: #c41e3a;
+  background-image:
+    repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px),
+    repeating-linear-gradient(-45deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+  border-radius: 16px;
+  border: none;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.envelope.opened .letter-card-inner::before {
+  display: none;
+}
+
+/* When envelope is opened, expand letter and fit envelope around it */
+.envelope.opened {
+  width: 100%;
+  max-width: 800px;
+  height: auto;
+  min-height: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.envelope.opened .envelope-letter {
+  width: 100%;
+  height: auto;
+  position: relative;
+  top: auto;
+  left: auto;
+  transform: translate(0, 0) scale(1);
+  margin-top: 0;
+  z-index: 3;
+  padding: 0;
+}
+
+.envelope.opened .letter-card {
+  height: auto;
+  margin: 0;
+}
+
+.envelope.opened .letter-card-inner {
+  max-height: none;
+  overflow-y: visible;
+  margin: 0 auto;
+}
+
+/* When opened, hide original envelope pieces so only the red letter background shows */
+.envelope.opened .envelope-back,
+.envelope.opened .envelope-body,
+.envelope.opened .envelope-flap {
+  display: none;
 }
 
 .letter-card-inner::before {
@@ -631,8 +836,8 @@ main {
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.75rem;
   margin-top: 1rem;
 }
 
@@ -879,7 +1084,8 @@ main {
   }
 
   .gallery-grid {
-    gap: 0.75rem;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5rem;
   }
 
   .reasons-list {
@@ -1501,28 +1707,78 @@ main {
   transform: translateY(0);
 }
 
-.gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 1rem;
-  margin-top: 1rem;
-}
+/* Duplicate removed - using main gallery-grid definition above */
 
-@media (max-width: 1024px) {
+/* Responsive Gallery Grid - Mobile always 4 columns */
+@media (max-width: 768px) {
   .gallery-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 0.5rem;
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) and (max-width: 1199px) {
   .gallery-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .gallery-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1rem;
   }
 }
 
 @media (max-width: 480px) {
-  .gallery-grid {
-    grid-template-columns: repeat(1, minmax(0, 1fr));
+  .gallery-item {
+    border-radius: 8px;
+  }
+  
+  .gallery-item-delete {
+    width: 24px;
+    height: 24px;
+    font-size: 1rem;
+    top: 0.25rem;
+    right: 0.25rem;
+  }
+  
+  .upload-btn-text {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+  }
+  
+  .gallery-upload-container {
+    margin-top: 1.5rem;
+  }
+  
+  /* Envelope responsive */
+  .envelope {
+    width: 280px;
+    height: 190px;
+  }
+  
+  .envelope-text {
+    font-size: 1.1rem;
+  }
+  
+  .envelope-heart {
+    font-size: 1.4rem;
+  }
+  
+  .envelope.opened {
+    width: 100%;
+    max-width: 100%;
+  }
+  
+  .letter-card-inner {
+    padding: 1.5rem 1.25rem 1.75rem;
+    font-size: 0.95rem;
+  }
+  
+  .letter-body {
+    font-size: 1rem;
   }
 }
 
