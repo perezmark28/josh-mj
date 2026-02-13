@@ -37,7 +37,7 @@
             <input type="file" id="photoUpload" name="media[]" accept="image/*" multiple capture="environment">
             <span class="upload-btn-text">Add photos</span>
           </label>
-          <p class="upload-hint">Photos only – JPEG, PNG, GIF, WebP (max 50MB each). Works on phone and desktop.</p>
+          <p class="upload-hint">Select up to 4 (or more) photos at once to upload in one go. JPEG, PNG, GIF, WebP – max 50MB each.</p>
         </form>
       </div>
     </section>

@@ -28,10 +28,12 @@
 
       <div class="music-card">
         <iframe
-          src="https://open.spotify.com/embed/track/1Y3LN4zO1Edc2EluIoSPJN?utm_source=generator"
+          data-testid="embed-iframe"
+          style="border-radius:12px"
+          src="https://open.spotify.com/embed/track/3NLnwwAQbbFKcEcV8hDItk?utm_source=generator"
           width="100%"
           height="352"
-          frameborder="0"
+          frameBorder="0"
           allowfullscreen=""
           allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
           loading="lazy">

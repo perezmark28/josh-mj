@@ -80,14 +80,21 @@ document.addEventListener('DOMContentLoaded', function() {
       })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-          if (data.ok && data.uploaded && data.uploaded.length) loadGallery();
+          if (data.ok && data.uploaded && data.uploaded.length) {
+            loadGallery();
+            var n = data.uploaded.length;
+            if (n > 1) {
+              btn.textContent = n + ' photos uploaded ✓';
+              setTimeout(function() { btn.textContent = origText; }, 2500);
+            }
+          }
           if (data.errors && data.errors.length) alert('Some files were skipped:\n' + data.errors.join('\n'));
           if (data.error && !data.uploaded) alert(data.error);
           photoUpload.value = '';
         })
         .catch(function() { alert('Upload failed. Check file size (max 50MB) or try again.'); })
         .finally(function() {
-          btn.textContent = origText;
+          if (btn.textContent.indexOf('uploaded') === -1) btn.textContent = origText;
           btn.disabled = false;
         });
     });
